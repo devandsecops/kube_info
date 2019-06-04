@@ -22,7 +22,7 @@ CHOICE=$(dialog --clear \
 clear
 case $CHOICE in
         1)
-            echo "You chose Option 1"
+            echo "You chose Option 1!!!"
             ;;
         2)
             echo "You chose Option 2"
