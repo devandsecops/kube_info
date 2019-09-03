@@ -20,7 +20,7 @@ pipeline {
         stage('Get File Size'){
             steps{
                 script {
-                    def FILE_SIZE = sh (script: "ls -lrth ${inputResult} | awk '{ print \$5 }'", returnStdout:true).trim()
+                    def FILE_SIZE = sh (script: "ls -lrth /var/lib/jenkins/${inputResult} | awk '{ print \$5 }'", returnStdout:true).trim()
                     echo "The size of the file is: ${FILE_SIZE}"
                 }
             }
