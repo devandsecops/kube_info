@@ -1,15 +1,21 @@
 pipeline {
-   agent any
-   stages {
-      stage('user input') {
-         steps {
-            script {
-               def apps = sh (script: "helm ls | awk '{print $1}' | sed -n '1!p'", returnStdout:true).trim()
-               timeout ( time: 10, unit: "MINUTES" )  {
-                  HELMLS=input( id: 'userInput', message: 'List out helm releases', parameters: [ [$class: 'ChoiceParameterDefinition', choices: apps, description: '', name: 'Application:'] ])
-               }
+    agent any
+    stages {
+        stage('My Stage') {
+            steps {
+                script {
+                    def GIT_TAGS = sh (script: 'ls -lrta', returnStdout:true).trim()
+                    inputResult = input(
+                        message: "Select a git tag",
+                        parameters: [choice(name: "git_tag", choices: "${GIT_TAGS}", description: "Git tag")]
+                    )
+                }
             }
-         }
-      }
+        }
+        stage('My other Stage'){
+            steps{
+                echo "The selected tag is: ${inputResult}"
+            }
+        }
     }
 }
