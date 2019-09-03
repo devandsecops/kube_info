@@ -1,26 +1,15 @@
 pipeline {
-agent any
-
-environment{
-    branch1 = 'stack'
-    branch2 = 'over'
-    branch3 = 'flow'
-}
-
-stages {
-    stage('Stage-One') {
-        steps {
-            script {                
-                env.BRANCHDEPLOY = input message: 'User input required',
-                ok: 'Deploy!',
-                parameters: [choice(name: 'Branch to deploy', choices: "${branch1}\n${branch2}\n${branch3}", description: 'What branch you wont deploy?')]
+   agent any
+   stages {
+      stage('user input') {
+         steps {
+            script {
+               def apps = sh (script: "helm ls | awk '{print $1}' | sed -n '1!p'", returnStdout:true).trim()
+               timeout ( time: 10, unit: "MINUTES" )  {
+                  HELMLS=input( id: 'userInput', message: 'List out helm releases', parameters: [ [$class: 'ChoiceParameterDefinition', choices: apps, description: '', name: 'Application:'] ])
+               }
             }
-        }
+         }
+      }
     }
-    stage('Stage-Two'){
-        steps{
-            sh "echo ${BRANCHDEPLOY}"
-        }
-    }
-}
 }
