@@ -8,7 +8,8 @@ node() {
     }
     stage('Trigger Automation Job') {
       when {
-          tag "*-SNAPSHOT"
+        branch 'master'
+          //tag "*-SNAPSHOT"
       }
         steps {
           sleep 60
