@@ -1,6 +1,6 @@
 pipeline {
 	agent any
-	deleteDir()
+	//deleteDir()
 	stages {
 		stage('Setup') {
 			steps {
