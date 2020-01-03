@@ -6,5 +6,12 @@ pipeline {
                 echo "Hello!!"
             }
         }
+        stage (Boto3) {
+            steps {
+              sh '''
+              python boto.py
+              '''
+            }
+        }
     }
 }
