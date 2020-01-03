@@ -9,7 +9,7 @@ pipeline {
         stage (Boto3) {
             steps {
               sh '''
-              sudo python boto.py
+              python boto.py
               '''
             }
         }
